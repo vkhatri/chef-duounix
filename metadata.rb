@@ -4,7 +4,7 @@ maintainer_email 'vir.khatri@gmail.com'
 license 'Apache-2.0'
 description 'Installs/Configures duounix'
 long_description 'Installs/Configures duounix'
-version '0.1.0'
+version '1.0.0'
 chef_version '>= 12.1' if respond_to?(:chef_version)
 
 source_url 'https://github.com/vkhatri/chef-duounix' if respond_to?(:source_url)
