@@ -1,4 +1,11 @@
 ---
+<%
+  duounix_ikey = ENV['DUOUNIX_IKEY'] || ''
+  duounix_skey = ENV['DUOUNIX_SKEY'] || ''
+  duounix_host = ENV['DUOUNIX_HOST'] || ''
+  duounix_test_user = ENV['DUOUNIX_TEST_USER'] || ''
+  duounix_test_user_ssh_key = ENV['DUOUNIX_TEST_USER_SSH_KEY'] || ''
+%>
 driver:
   name: dokken
   privileged: true
@@ -11,19 +18,15 @@ verifier:
 
 provisioner:
   name: dokken
+  data_bags_path: test/data_bags
   attributes:
-    duounix:
-      config_sshd: true
-      config:
-        ikey: ikey-xxxxxxxx
-        skey: skey-xxxxxxxx
-        host: api-xxxxxxxx.duosecurity.com
     apt:
+      compile_time_update: true
       confd:
         install_recommends: false
 
 platforms:
-  - name: ubuntu-14
+  - name: ubuntu14
     driver:
       image: ubuntu:14.04
       pid_one_command: /sbin/init
@@ -31,7 +34,7 @@ platforms:
         - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-  - name: ubuntu-16
+  - name: ubuntu16
     driver:
       image: ubuntu:16.04
       pid_one_command: /bin/systemd
@@ -39,7 +42,7 @@ platforms:
         - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-  - name: debian-8
+  - name: debian8
     driver:
       image: debian:8.9
       pid_one_command: /sbin/init
@@ -47,7 +50,7 @@ platforms:
         - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-  - name: debian-9
+  - name: debian9
     driver:
       image: dokken/debian-9
       pid_one_command: /bin/systemd
@@ -55,7 +58,7 @@ platforms:
         - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
-  - name: centos-6
+  - name: centos6
     driver:
       image: centos:6.9
       pid_one_command: /sbin/init
@@ -63,7 +66,7 @@ platforms:
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts which curl
 
-  - name: centos-7
+  - name: centos7
     driver:
       image: centos:7
       pid_one_command: /usr/lib/systemd/systemd
@@ -71,9 +74,9 @@ platforms:
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts systemd-sysv which lsof curl
 
-  - name: fedora-26
+  - name: fedora28
     driver:
-      image: fedora:26
+      image: fedora:28
       pid_one_command: /usr/lib/systemd/systemd
       platform: rhel
       intermediate_instructions:
@@ -81,7 +84,7 @@ platforms:
 
   - name: amazon
     driver:
-      image: amazonlinux:2017.03
+      image: amazonlinux:2018.03
       pid_one_command: /sbin/init
       platform: amazon
       intermediate_instructions:
@@ -96,14 +99,34 @@ platforms:
         - RUN yum install -y net-tools initscripts which
 
 suites:
-  - name: chef12
-    driver:
-      chef_version: 12.21.4
-    run_list:
-      - recipe[duounix::default]
-
   - name: chef13
+    verifier:
+      inspec_tests:
+        - test/smoke/default
     driver:
       chef_version: 13.3.42
     run_list:
-      - recipe[duounix::default]
+      - recipe[duounix_test::default]
+    attributes:
+      duounix_wrapper:
+        test_user: <%= duounix_test_user %>
+        test_user_ssh_pub_key: <%= duounix_test_user_ssh_key %>
+        config:
+          ikey: <%= duounix_ikey %>
+          skey: <%= duounix_skey %>
+          host: <%= duounix_host %>
+
+  - name: chef13databag
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    driver:
+      chef_version: 13.3.42
+    run_list:
+      - recipe[duounix_test::default]
+    attributes:
+      duounix_wrapper:
+        data_bag:
+          enable: true
+        test_user: <%= duounix_test_user %>
+        test_user_ssh_pub_key: <%= duounix_test_user_ssh_key %>

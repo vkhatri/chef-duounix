@@ -1,6 +1,12 @@
 duounix CHANGELOG
 ==================
 
+2.0.0
+-----
+- Virender Khatri - Converted recipes into resources
+
+- Virender Khatri - Updated Kitchen Tests
+
 1.0.0
 -----
 

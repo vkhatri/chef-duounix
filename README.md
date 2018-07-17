@@ -3,7 +3,7 @@ duounix Cookbook
 
 [![Cookbook](https://img.shields.io/github/tag/vkhatri/chef-duounix.svg)](https://github.com/vkhatri/chef-duounix) [![Build Status](https://travis-ci.org/vkhatri/chef-duounix.svg?branch=master)](https://travis-ci.org/vkhatri/chef-duounix)
 
-This is a [Chef] cookbook to manage [Duounix].
+This is a [Chef] cookbook to setup [Duounix].
 
 
 >> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/duounix).
@@ -12,22 +12,20 @@ This is a [Chef] cookbook to manage [Duounix].
 ## Most Recent Release
 
 ```ruby
-cookbook 'duounix', '~> 1.0.0'
+cookbook 'duounix', '~> 2.0.0'
 ```
 
 
 ## From Git
 
 ```ruby
-cookbook 'duounix', github: 'vkhatri/chef-duounix',  tag: 'v1.0.0'
+cookbook 'duounix', github: 'vkhatri/chef-duounix',  tag: 'v2.0.0'
 ```
 
 
 ## Repository
 
-```
-https://github.com/vkhatri/chef-duounix
-```
+[https://github.com/vkhatri/chef-duounix](https://github.com/vkhatri/chef-duounix)
 
 
 ## Supported OS
@@ -52,76 +50,36 @@ https://github.com/vkhatri/chef-duounix
 
 ## Recipes
 
-- `duounix::sshd` - configure openssh
+- `duounix_install` - install duounix and dependency packages
 
-- `duounix::config` - configure duo unix
-
-- `duounix::default` - default recipe (run_list)
-
-- `duounix::install` - install duo unix
+- `duounix_config` - configure duounix
 
 
-## Attributes
+## Resource duounix_install
 
-* `default['duounix']['config_sshd']` (default: `false`): configure openssh if set to `true`
+**Resource Property**
 
-* `default['duounix']['version']` (default: `1.10.1`): duo unix package version
+- *version* (optional, String) - default: '1.10.1', duounix package version
+- *release* (optional, String) - default: '0', duouninx package version release
+- *setup_repo* (optional, TrueClass, FalseClass) - default: true, setup duounix apt/yum repository
+- *ignore_package_version* (optional, TrueClass, FalseClass) - default: false, install latest duounix package
 
-* `default['duounix']['ssl_package_name']` (default: `false`): openssl package name
+## Resource duounix_config_login_duo
 
-* `default['duounix']['package_name']` (default: `calculated`): duo unix package name
+**Resource Property**
 
-* `default['duounix']['setup_repo']` (default: `true`): setup `apt` or `yum` repository if set to `true`
+- *config* (optional, Hash) - default: '{..}', duounix login_duo.conf file configuration
+- *data_bag_enable* (optional, TrueClass, FalseClass) - default: false, read `ikey`, `skey`, and `host` configuration attribute value from data bag
+- *data_bag_name* (optional, String) - default: 'duounix', duouninx config attributes data bag name
+- *data_bag_item_name* (optional, String) - default: 'duounix', duouninx config attributes data bag item name
+- *data_bag_item_ikey_attr* (optional, String) - default: 'ikey', duounix data bag item attribute `ikey` key name
+- *data_bag_item_skey_attr* (optional, String) - default: 'skey', duounix data bag item attribute `skey` key name
+- *data_bag_item_host_attr* (optional, String) - default: 'host', duounix data bag item attribute `host` key name
 
-* `default['duounix']['config']['ikey']` (default: `nil`): `login_duo.conf` parameter
 
-* `default['duounix']['config']['skey']` (default: `nil`): `login_duo.conf` parameter
+## Usage
 
-* `default['duounix']['config']['host']` (default: `nil`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['groups']` (default: `nil`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['failmode']` (default: `nil`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['pushinfo']` (default: `yes`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['http_proxy']` (default: `nil`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['autopush']` (default: `yes`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['motd']` (default: `yes`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['prompts']` (default: `nil`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['accept_env_factor']` (default: `nil`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['fallback_local_ip']` (default: `nil`): `login_duo.conf` parameter
-
-* `default['duounix']['config']['https_timeout']` (default: `nil`): `login_duo.conf` parameter
-
-* `default['duounix']['yum']['description']` (default: `DuoSecurity`): yum repository attribute
-
-* `default['duounix']['yum']['gpgcheck']` (default: `true`): yum repository attribute
-
-* `default['duounix']['yum']['enabled']` (default: `true`): yum repository attribute
-
-* `default['duounix']['yum']['baseurl']` (default: `calculated`): yum repository attribute
-
-* `default['duounix']['yum']['gpgkey']` (default: `https://www.duosecurity.com/RPM-GPG-KEY-DUO`): yum repository attribute
-
-* `default['duounix']['yum']['action']` (default: `:create`): yum repository attribute
-
-* `default['duounix']['apt']['description']` (default: `DuoSecurity`): apt repository attribute
-
-* `default['duounix']['apt']['components']` (default: `['main']`): apt repository attribute
-
-* `default['duounix']['apt']['uri']` (default: `calculated`): apt repository attribute
-
-* `default['duounix']['apt']['key']` (default: `https://www.duosecurity.com/RPM-GPG-KEY-DUO`): apt repository attribute
-
-* `default['duounix']['apt']['distribution']` (default: `node['lsb']['codename']`): apt repository attribute
-
-* `default['duounix']['apt']['action']` (default: `:add`): apt repository attribute
+Check out test cookbook `duounix_test` for resources example.
 
 
 ## Contributing
@@ -130,7 +88,7 @@ https://github.com/vkhatri/chef-duounix
 2. Create a named feature branch (like `add_component_x`)
 3. Write your change
 4. Write tests for your change (if applicable)
-5. Run the tests (`rake & rake knife`), ensuring they all pass
+5. Run the tests (`chef exec rake and chef exec kitchen verify`), ensuring they all pass
 6. Write new resource/attribute description to `README.md`
 7. Write description about changes to PR
 8. Submit a Pull Request using Github

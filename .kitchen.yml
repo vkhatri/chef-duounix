@@ -1,4 +1,11 @@
 ---
+<%
+  duounix_ikey = ENV['DUOUNIX_IKEY'] || ''
+  duounix_skey = ENV['DUOUNIX_SKEY'] || ''
+  duounix_host = ENV['DUOUNIX_HOST'] || ''
+  duounix_test_user = ENV['DUOUNIX_TEST_USER'] || ''
+  duounix_test_user_ssh_key = ENV['DUOUNIX_TEST_USER_SSH_KEY'] || ''
+%>
 driver:
   name: vagrant
 
@@ -28,14 +35,34 @@ platforms:
       - recipe[apt::default]
 
 suites:
-  - name: chef12package
-    driver:
-      require_chef_omnibus: 12.21.4
-    run_list:
-      - recipe[duosec::default]
-
-  - name: chef13package
+  - name: chef13
+    verifier:
+      inspec_tests:
+        - test/smoke/default
     driver:
       require_chef_omnibus: 13.3.42
     run_list:
-      - recipe[duosec::default]
+      - recipe[duounix_test::default]
+    attributes:
+      duounix_wrapper:
+        test_user: <%= duounix_test_user %>
+        test_user_ssh_pub_key: <%= duounix_test_user_ssh_key %>
+        config:
+          ikey: <%= duounix_ikey %>
+          skey: <%= duounix_skey %>
+          host: <%= duounix_host %>
+
+  - name: chef13databag
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    driver:
+      require_chef_omnibus: 13.3.42
+    run_list:
+      - recipe[duounix_test::default]
+    attributes:
+      duounix_wrapper:
+        data_bag:
+          enable: true
+        test_user: <%= duounix_test_user %>
+        test_user_ssh_pub_key: <%= duounix_test_user_ssh_key %>
