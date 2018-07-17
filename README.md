@@ -52,7 +52,7 @@ cookbook 'duounix', github: 'vkhatri/chef-duounix',  tag: 'v2.0.0'
 
 - `duounix_install` - install duounix and dependency packages
 
-- `duounix_config` - configure duounix
+- `duounix_config_login_duo` - configure duounix
 
 
 ## Resource duounix_install
