@@ -34,6 +34,3 @@ module Duounix
     end
   end
 end
-
-Chef::Resource.send(:include, ::Duounix::Helpers)
-Chef::Recipe.send(:include, ::Duounix::Helpers)

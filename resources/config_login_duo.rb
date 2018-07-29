@@ -31,3 +31,7 @@ action :delete do
     action :delete
   end
 end
+
+action_class do
+  include ::Duounix::Helpers
+end
