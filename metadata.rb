@@ -13,5 +13,3 @@ issues_url 'https://github.com/vkhatri/chef-duounix/issues' if respond_to?(:issu
 %w[ubuntu centos amazon redhat fedora].each do |os|
   supports os
 end
-
-depends 'openssh', '>= 2.6.1'
