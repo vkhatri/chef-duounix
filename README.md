@@ -12,14 +12,14 @@ This is a [Chef] cookbook to setup [Duounix].
 ## Most Recent Release
 
 ```ruby
-cookbook 'duounix', '~> 2.0.0'
+cookbook 'duounix', '~> 2.1.0'
 ```
 
 
 ## From Git
 
 ```ruby
-cookbook 'duounix', github: 'vkhatri/chef-duounix',  tag: 'v2.0.0'
+cookbook 'duounix', github: 'vkhatri/chef-duounix',  tag: 'v2.1.0'
 ```
 
 
