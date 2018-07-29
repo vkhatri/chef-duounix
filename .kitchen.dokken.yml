@@ -1,9 +1,9 @@
 ---
 <%
-  duounix_ikey = ENV['DUOUNIX_IKEY'] || ''
-  duounix_skey = ENV['DUOUNIX_SKEY'] || ''
-  duounix_host = ENV['DUOUNIX_HOST'] || ''
-  duounix_test_user = ENV['DUOUNIX_TEST_USER'] || ''
+  duounix_ikey = ENV['DUOUNIX_IKEY'] || 'ikey-default'
+  duounix_skey = ENV['DUOUNIX_SKEY'] || 'skey-default'
+  duounix_host = ENV['DUOUNIX_HOST'] || 'host-default'
+  duounix_test_user = ENV['DUOUNIX_TEST_USER'] || 'testuser'
   duounix_test_user_ssh_key = ENV['DUOUNIX_TEST_USER_SSH_KEY'] || ''
 %>
 driver:
@@ -104,7 +104,7 @@ suites:
       inspec_tests:
         - test/smoke/default
     driver:
-      chef_version: 13.3.42
+      chef_version: 13.9.4
     run_list:
       - recipe[duounix_test::default]
     attributes:
@@ -121,7 +121,7 @@ suites:
       inspec_tests:
         - test/smoke/default
     driver:
-      chef_version: 13.3.42
+      chef_version: 13.9.4
     run_list:
       - recipe[duounix_test::default]
     attributes:
