@@ -4,6 +4,7 @@ resource_name :duounix_install
 property :version, String, default: '1.10.1'
 property :release, String, default: '0'
 property :setup_repo, [TrueClass, FalseClass], default: true
+property :install_openssh, [TrueClass, FalseClass], default: true
 property :ignore_package_version, [TrueClass, FalseClass], default: false
 
 default_action :create
@@ -49,7 +50,7 @@ action :create do
 
   package deps_packages
 
-  package openssh_packages
+  package openssh_packages if new_resource.install_openssh
 
   package package_name do
     version duounix_version(new_resource.version, new_resource.release) unless new_resource.ignore_package_version
