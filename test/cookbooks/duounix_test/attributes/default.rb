@@ -18,7 +18,7 @@ default['duounix_wrapper']['config'].tap do |c|
   c['http_proxy'] = nil
   c['autopush'] = 'yes'
   c['motd'] = 'yes'
-  c['prompts'] = nil
+  c['prompts'] = 1
   c['accept_env_factor'] = nil
   c['fallback_local_ip'] = nil
   c['https_timeout'] = nil
