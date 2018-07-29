@@ -39,8 +39,8 @@ cookbook 'duounix', github: 'vkhatri/chef-duounix',  tag: 'v2.0.0'
 
 ## Supported Chef
 
-- Chef 12
 - Chef 13
+- Chef 14
 
 
 ## Cookbook Dependency
@@ -62,6 +62,7 @@ cookbook 'duounix', github: 'vkhatri/chef-duounix',  tag: 'v2.0.0'
 - *version* (optional, String) - default: '1.10.1', duounix package version
 - *release* (optional, String) - default: '0', duouninx package version release
 - *setup_repo* (optional, TrueClass, FalseClass) - default: true, setup duounix apt/yum repository
+- *install_openssh* (optional, TrueClass, FalseClass) - default: true, install openssh packages, required for config resource
 - *ignore_package_version* (optional, TrueClass, FalseClass) - default: false, install latest duounix package
 
 ## Resource duounix_config_login_duo

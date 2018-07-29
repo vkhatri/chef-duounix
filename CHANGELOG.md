@@ -1,8 +1,22 @@
 duounix CHANGELOG
 ==================
 
+2.1.0
+-----
+
+- Virender Khatri - Fixed Resource to include helper module
+
+- Virender Khatri - Set default attr value in test cookbook
+
+- Virender Khatri - Updated Kitchen Tests for default attributes
+
+- Virender Khatri - Added optional openssh packages install attribute
+
+- Virender Khatri - Updated kitchen for Chef 13 and 14
+
 2.0.0
 -----
+
 - Virender Khatri - Converted recipes into resources
 
 - Virender Khatri - Updated Kitchen Tests
