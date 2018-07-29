@@ -130,3 +130,20 @@ suites:
           enable: true
         test_user: <%= duounix_test_user %>
         test_user_ssh_pub_key: <%= duounix_test_user_ssh_key %>
+
+  - name: chef14
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    driver:
+      chef_version: 14.2.0
+    run_list:
+      - recipe[duounix_test::default]
+    attributes:
+      duounix_wrapper:
+        test_user: <%= duounix_test_user %>
+        test_user_ssh_pub_key: <%= duounix_test_user_ssh_key %>
+        config:
+          ikey: <%= duounix_ikey %>
+          skey: <%= duounix_skey %>
+          host: <%= duounix_host %>
